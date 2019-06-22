@@ -19,7 +19,7 @@ int main(){
 		cout<<a[i]<<" ";
 	}
 	cout<<endl;
-	
+
 	int key;
 	cin>>key;
 	int i;
@@ -33,6 +33,7 @@ int main(){
 		cout<<"Key Not Found"<<endl;
 	}
 	cout<<endl;
+
 
 	return 0; 
 }
