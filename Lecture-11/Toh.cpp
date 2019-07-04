@@ -9,6 +9,7 @@ void toh(int n,char source,char helper,char destination){
 	}
 
 	// Recursive case
+	// A:source, B : Helper, C : Destination
 	// Move n-1 disks from A to B
 	toh(n-1,source,destination,helper);
 	// Manually take nth disk from A to C
