@@ -4,32 +4,33 @@ using namespace std;
 //---------------BLUE PRINT --------------------
 class car
 {
-
 	int seats;
 public:
 	char *name;
 	int model;
 	int price;
-	
+	static int count;
+	const int tyres;
 
-	car()
+	car():tyres(4),name(NULL)
 	{
-		cout<<"IAM IN DEFAULT CONSTRUCTOR"<<endl;
-		name=NULL;
+		cout<<"I AM IN DEFAULT CONSTRUCTOR"<<endl;
+		// name=NULL;
+		count++;
 	}
 
-	car(char *ch,int m,int p,int s)
+	car(char *ch,int m,int p,int s):tyres(4),model(m),price(p)
 	{
 		cout<<"Iam in 4 parameter CONSTRUCTOR"<<endl;
 		name=new char[strlen(ch)+1];
 		strcpy(name,ch);
-		model=m;
-		price=p;
+		// model=m;
+		// price=p;
 		seats=s;
-
+		count++;
 	}
 
-	car(char *ch,int m,int p)
+	car(char *ch,int m,int p):tyres(4)
 	{
 		cout<<"In 3 parameter CONSTRUCTOR"<<endl;
 		name=new char[strlen(ch)+1];
@@ -37,20 +38,23 @@ public:
 		model=m;
 		price=p;
 		seats=4;
+		count++;
 
 	}
 
-	car(car &x)
-	{
+	car(car &x):tyres(4)
+	{	// 1. car c(d)
+		// 2. car c = d;
 		cout<<"INSIDE COPY CONSTRUCTOR"<<endl;
 		name=new char[strlen(x.name)+1];
 		strcpy(name,x.name);
 		model=x.model;
 		price=x.price;
 		seats=x.seats;
+		count++;
 	}
 
-	void print()
+	void print()const
 	{
 		cout<<"name is "<<name<<endl;
 		cout<<"model is "<<model<<endl;
@@ -81,7 +85,7 @@ public:
 		seats=4;	
 	}
 
-	int getSeats()
+	int getSeats() const
 	{
 		return seats;
 	}
@@ -126,15 +130,15 @@ public:
 		model+=x.model;
 		price+=x.price;
 		seats+=x.seats;
-
-
 	}
 
-
-
-
-
+	~car(){
+		cout<<"Deleting Car "<<name<<endl;
+		count--;
+	}
 };
+
+int car::count = 0; // Assign values to static variables in this way
 
 
 int main()
@@ -186,8 +190,11 @@ int main()
 	G.print();
 	cout<<endl;
 
+	cout<<car::count<<endl;
+
 	return 0;
 }
+
 
 
 
