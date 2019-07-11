@@ -127,6 +127,29 @@ void DeleteAtMid(node* &head,node* &tail,int pos){
 	}
 }
 
+node* mid(node* head){
+	if(head == NULL || head->next == NULL){
+		return head;
+	}
+	node* fast = head->next;
+	node* slow = head;
+
+	while(fast!=NULL && fast->next!=NULL){
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+	return slow;
+}
+
+node* search(node* head,int key){
+	while(head){
+		if(head->data == key){
+			return head;
+		}
+		head=head->next;
+	}
+	return NULL;
+}
 
 int main(){
 	node* head=NULL;
@@ -139,9 +162,17 @@ int main(){
 	InsertAtEnd(head,tail,3);
 	InsertAtEnd(head,tail,5);
 	InsertAtEnd(head,tail,6);
+	InsertAtEnd(head,tail,7);
 	Print(head);
-	DeleteAtMid(head,tail,3);
-	Print(head);
+	node* ans = search(head,60);
+	if(ans!=NULL){
+		cout<<"Found :"<<ans->data<<endl;
+	}
+	else{
+		cout<<"Not Found"<<endl;
+	}
+	// DeleteAtMid(head,tail,3);
+	// Print(head);
 	// InsertAtMid(head,tail,4,4);
 	// Print(head);
 	// DeleteAtFront(head,tail);
@@ -150,7 +181,8 @@ int main(){
 	// DeleteAtEnd(head,tail);
 	// Print(head);
 	cout<<"Length : "<<length(head)<<endl;
-
+	node* m = mid(head);
+	cout<<m->data<<endl;
 
 	return 0;
 }
