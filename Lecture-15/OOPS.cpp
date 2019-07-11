@@ -191,7 +191,6 @@ int main()
 	cout<<endl;
 
 	cout<<car::count<<endl;
-
 	return 0;
 }
 
