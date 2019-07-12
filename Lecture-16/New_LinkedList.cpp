@@ -68,7 +68,6 @@ void BubbleSortLL(node* &head){
 	node* c;
 	node* n;
 	node* p;
-
 	int iterations = length(head)-1;
 	for(int i=0;i<=iterations;i++){
 		c = head;
@@ -101,20 +100,91 @@ void BubbleSortLL(node* &head){
 
 }
 
+void ReverseLL(node* &head){
+	node* c= head;
+	node* p = NULL;
+	node* n;
+
+	while(c){
+		n = c->next;
+		c->next = p;
+		p = c;
+		c = n;
+	}
+	head = p;
+}
+
+node* merge(node* a,node* b){
+	if(a==NULL){
+		return b;
+	}
+	if(b==NULL){
+		return a;
+	}
+	node* c;
+	if(a->data<b->data){
+		c = a;
+		c->next = merge(a->next,b);
+	}
+	else{
+		c = b;
+		c->next = merge(a,b->next);
+	}
+	return c;
+}
+
+node* MergeSortLL(node* head){
+	// Base case
+	if(head == NULL || head->next == NULL){
+		return head;
+	}
+	// Divide
+	node* m = mid(head);
+	node* a = head;
+	node* b = m->next;
+	m->next = NULL;
+	
+	// Sort
+	a = MergeSortLL(a);
+	b = MergeSortLL(b);
+	// Merge
+	node* newHead = merge(a,b);
+	return newHead;
+}
+
+
 int main(){
 	node* head=NULL;
+	node* head1=NULL;
 
 	InsertAtFront(head,0);
-	InsertAtFront(head,1);
 	InsertAtFront(head,2);
-	InsertAtFront(head,3);
+	InsertAtFront(head,4);
+	InsertAtFront(head,6);
 	InsertAtFront(head,4);
 	InsertAtFront(head,5);
 	InsertAtFront(head,6);
 	InsertAtFront(head,7);
 	Print(head);
-	BubbleSortLL(head);
+	head = MergeSortLL(head);
 	Print(head);
+
+	// InsertAtFront(head1,9);
+	// InsertAtFront(head1,7);
+	// InsertAtFront(head1,5);
+	// InsertAtFront(head1,3);
+	// InsertAtFront(head1,1);
+	// InsertAtFront(head1,0);
+	// Print(head1);
+	// head = merge(head,head1);
+	// Print(head);
+	// BubbleSortLL(head);
+	// Print(head);
+	// ReverseLL(head);
+	// Print(head);
+	// ReverseLL(head);
+	// Print(head);
+
 	// node* ans = search(head,60);
 	// if(ans!=NULL){
 	// 	cout<<"Found :"<<ans->data<<endl;
