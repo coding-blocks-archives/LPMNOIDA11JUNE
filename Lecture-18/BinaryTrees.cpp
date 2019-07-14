@@ -58,9 +58,25 @@ void PostOrder(node* root){
 	cout<<root->data<<" ";
 }
 
+int CountNodes(node* root){
+	if(root == NULL){
+		return 0;
+	}
+
+	return CountNodes(root->left)+CountNodes(root->right)+1;
+}
+
+int Height(node* root){
+	if(root == NULL){
+		return 0;
+	}
+
+	int left = Height(root->left);
+	int right = Height(root->right);
+	return max(left,right)+1;
+}
 
 int main(){
-
 	node* root = NULL;
 	root = CreateTree();
 
@@ -70,21 +86,8 @@ int main(){
 	cout<<endl;
 	PostOrder(root);
 	cout<<endl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	cout<<"Number of Nodes : "<<CountNodes(root)<<endl;
+	cout<<"Height of Tree : "<<Height(root)<<endl;
 
 	return 0;
 }
