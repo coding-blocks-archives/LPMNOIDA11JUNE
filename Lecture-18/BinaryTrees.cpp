@@ -76,6 +76,42 @@ int Height(node* root){
 	return max(left,right)+1;
 }
 
+int Diameter(node* root){
+	if(root == NULL){
+		return 0;
+	}
+
+	int op1 = Height(root->left) + Height(root->right);
+	int op2 = Diameter(root->left);
+	int op3 = Diameter(root->right);
+	return max(op1,max(op2,op3));
+}
+
+class Pair{
+public:
+	int height;
+	int diameter;
+};
+
+Pair FastDiameter(node* root){
+	Pair p;
+	if(root == NULL){
+		p.height = p.diameter = 0;
+		return p;
+	}
+
+	Pair left = FastDiameter(root->left);
+	Pair right= FastDiameter(root->right);
+
+	p.height = max(left.height,right.height)+1;
+
+	int op1 = left.height + right.height;
+	int op2 = left.diameter;
+	int op3 = right.diameter;
+	p.diameter = max(op1,max(op2,op3));
+	return p;
+}
+
 int main(){
 	node* root = NULL;
 	root = CreateTree();
@@ -88,6 +124,11 @@ int main(){
 	cout<<endl;
 	cout<<"Number of Nodes : "<<CountNodes(root)<<endl;
 	cout<<"Height of Tree : "<<Height(root)<<endl;
+	cout<<"Diameter of Tree : "<<Diameter(root)<<endl;
+
+	Pair p =FastDiameter(root);
+	cout<<"Height of Tree : "<<p.height<<endl;
+	cout<<"Diameter of Tree : "<<p.diameter<<endl;	
 
 	return 0;
 }
