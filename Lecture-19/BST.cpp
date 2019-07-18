@@ -156,6 +156,57 @@ node* ArrayToBST(int *arr,int s,int e){
 	return root;
 }
 
+class LinkedList{
+public:
+	node* head;
+	node* tail;
+};
+
+LinkedList BstToLL(node* root){
+	// Base case
+	LinkedList l;
+	if(root == NULL){
+		l.head = l.tail = NULL;
+		return l;
+	}
+	// Recursive case
+	if(root->left!=NULL && root->right == NULL){
+		LinkedList left = BstToLL(root->left);
+		left.tail->right = root;
+		l.head = left.head;
+		l.tail = root;
+		return l;
+	}
+	else if(root->left==NULL && root->right != NULL){
+		LinkedList right = BstToLL(root->right);
+		root->right = right.head;
+		l.head = root;
+		l.tail = right.tail;
+		return l;
+	}
+	else if(root->left == NULL && root->right == NULL){
+		l.head = l.tail = root;
+		return l;
+	}
+	else{
+		LinkedList left = BstToLL(root->left);
+		LinkedList right = BstToLL(root->right);
+		left.tail->right = root;
+		root->right=right.head;
+		l.head = left.head;
+		l.tail = right.tail;
+		return l;
+	}
+}
+
+void Print(node* head){
+	while(head){
+		cout<<head->data<<"-->";
+		head=head->right;
+	}
+	cout<<endl;
+}
+
 int main(){
 	node* root = NULL;
 	int arr[]={1,3,4,5,6,7,8,9,10,11,12,13};
@@ -178,8 +229,9 @@ int main(){
 	// cout<<endl;
 	// PostOrder(root);
 	// cout<<endl;
-	LevelOrderPrint(root);
-
+	// LevelOrderPrint(root);
+	LinkedList l = BstToLL(root);
+	Print(l.head);
 
 	return 0;
 }
