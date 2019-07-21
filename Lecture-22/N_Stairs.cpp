@@ -48,10 +48,6 @@ int FastStairs(int n,int k){
 			dp[i] = 2*dp[i-1];
 		}
 	}
-
-	// for(int i=0;i<=n;i++){
-	// 	cout<<dp[i]<<" ";
-	// }
 	cout<<endl;
 	return dp[n];
 }
