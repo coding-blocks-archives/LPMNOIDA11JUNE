@@ -106,6 +106,12 @@ public:
 		}
 	}
 
+	void remove(string key){
+		int i = hashFn(key);
+		node* head = Bucket[i];
+		node* prev = NULL;
+	}
+
 	void Print(){
 		for(int i=0;i<ts;i++){
 			cout<<i<<"-->";
@@ -129,10 +135,10 @@ int main(){
 	h.insert("Banana",50);
 	h.insert("Guava",30);
 	h.insert("Kiwi",60);
-	h["PineApple"] = 70;
-	h["PineApple"] = 170;
+	h["PineApple"] = 70; // Insertion
+	h["PineApple"] = 170; // Updation
 
-	cout<<h["PineApple"]<<endl;
+	cout<<h["PineApple"]<<endl; // search	
 	h.Print();
 
 
