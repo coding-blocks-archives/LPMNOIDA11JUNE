@@ -29,6 +29,39 @@ public:
 		}
 	}
 
+	void SSSP(T src){
+		map<T,int> dist;
+		set<pair<int,T> >s;
+
+		for(auto node:h){
+			dist[node.first] = INT_MAX;
+		}
+		dist[src] = 0;
+		s.insert(make_pair(0,src));
+
+		while(!s.empty()){
+			auto p = (*s.begin());
+			T parent = p.second;
+			int parent_dist = p.first;
+
+			s.erase(s.begin());
+			for(auto children:h[parent]){
+				if(dist[children.first]>dist[parent]+children.second){
+					auto f = s.find(make_pair(dist[children.first],children.first));
+					if(f!=s.end()){
+						s.erase(f);
+					}
+					dist[children.first] =dist[parent]+children.second;
+					s.insert(make_pair(dist[children.first],children.first));
+				}
+			}
+		}
+
+		for(auto node:dist){
+			cout<<"Distance of "<<node.first<<" from "<<src<<" is "<<node.second<<endl;
+		}
+	}
+
 };
 
 int main(){
@@ -43,7 +76,8 @@ int main(){
 	g.addEdge("Jaipur","Mumbai",8);
 
 
-	g.Print();
+	// g.Print();
+	g.SSSP("Amritsar");
 
 
 
