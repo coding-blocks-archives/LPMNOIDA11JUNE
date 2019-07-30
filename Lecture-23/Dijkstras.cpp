@@ -29,14 +29,16 @@ public:
 		}
 	}
 
-	void SSSP(T src){
+	void SSSP(T src,T des){
 		map<T,int> dist;
+		unordered_map<T,T> parent_map;
 		set<pair<int,T> >s;
 
 		for(auto node:h){
 			dist[node.first] = INT_MAX;
 		}
 		dist[src] = 0;
+		parent_map[src] = src;
 		s.insert(make_pair(0,src));
 
 		while(!s.empty()){
@@ -52,16 +54,22 @@ public:
 						s.erase(f);
 					}
 					dist[children.first] =dist[parent]+children.second;
+					parent_map[children.first] = parent;
 					s.insert(make_pair(dist[children.first],children.first));
 				}
 			}
 		}
 
-		for(auto node:dist){
-			cout<<"Distance of "<<node.first<<" from "<<src<<" is "<<node.second<<endl;
+		// for(auto node:dist){
+		// 	cout<<"Distance of "<<node.first<<" from "<<src<<" is "<<node.second<<endl;
+		// }
+		T temp = des;
+		while(temp!=src){
+			cout<<temp<<"<--";
+			temp=parent_map[temp];
 		}
+		cout<<src<<endl;
 	}
-
 };
 
 int main(){
@@ -77,7 +85,7 @@ int main(){
 
 
 	// g.Print();
-	g.SSSP("Amritsar");
+	g.SSSP("Amritsar","Mumbai");
 
 
 
